@@ -7,6 +7,7 @@ os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 # Load libraries
 import argparse
+from typing import Optional
 from dotenv import load_dotenv
 from transformers import (
     AutoModelForCausalLM,
@@ -18,26 +19,36 @@ from datasets import (
 import torch
 import re
 
-# Allow importing shared helpers (chat templates, etc.) by mimicking how
-# modeling/BiPO scripts locate them, even when SLURM copies this file to /var.
-_repo_candidates = []
-if os.getenv("SLURM_SUBMIT_DIR"):
-    _repo_candidates.append(Path(os.environ["SLURM_SUBMIT_DIR"]).resolve())
-_repo_candidates.append(Path(__file__).resolve().parents[1])
-_modeling_dir = None
-for _candidate in _repo_candidates:
-    maybe_dir = _candidate / "modeling" / "BiPO"
-    if maybe_dir.exists():
-        _modeling_dir = maybe_dir
-        break
-if _modeling_dir and str(_modeling_dir) not in sys.path:
-    sys.path.insert(0, str(_modeling_dir))
 
-try:
-    from chat_templates import ensure_tokenizer_has_chat_template
-except Exception:  # pragma: no cover - fallback when helper unavailable
-    def ensure_tokenizer_has_chat_template(tokenizer, template_hint=None):
-        return getattr(tokenizer, "chat_template", None)
+def _bootstrap_src_path() -> Optional[Path]:
+    """Ensure <repo>/src is on sys.path even when SLURM copies this script."""
+    candidates = []
+    submit_dir = os.getenv("SLURM_SUBMIT_DIR")
+    if submit_dir:
+        candidates.append(Path(submit_dir).resolve())
+    candidates.append(Path(__file__).resolve())
+    src_dir = None
+    for candidate in candidates:
+        for base in [candidate] + list(candidate.parents):
+            maybe_src = base if base.name == "src" else base / "src"
+            if maybe_src.is_dir():
+                src_dir = maybe_src
+                break
+        if src_dir:
+            break
+    if src_dir:
+        src_str = str(src_dir)
+        if src_str not in sys.path:
+            sys.path.insert(0, src_str)
+    return src_dir
+
+
+_bootstrap_src_path()
+
+from helper.repo_paths import ensure_modeling_on_sys_path
+from helper.chat import ensure_tokenizer_has_chat_template
+
+ensure_modeling_on_sys_path()
 
 from utils import (
     pprint_json,

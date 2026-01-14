@@ -2,6 +2,7 @@ from contextlib import contextmanager
 from functools import partial
 from pathlib import Path
 from typing import Any, Callable, Generator, Optional, Union
+import os
 import sys
 
 import torch
@@ -12,19 +13,37 @@ from transformers import PreTrainedModel
 from lm_eval.api.registry import register_model
 from lm_eval.models.huggingface import HFLM
 
-try:  # Prefer reusing the project's SAE utilities if present
-    _PROJECT_ROOT = Path(__file__).resolve()
-    _BIPO_DIR = _PROJECT_ROOT.parents[4] / "modeling" / "BiPO"
-    if _BIPO_DIR.exists():
-        sys_path_str = str(_BIPO_DIR)
-        if sys_path_str not in sys.path:
-            sys.path.append(sys_path_str)
-    else:
-        _BIPO_DIR = None
-except IndexError:
-    _BIPO_DIR = None
 
-try:  # type: ignore[used-before-assignment]
+def _bootstrap_src_path() -> Optional[Path]:
+    """Ensure <repo>/src is on sys.path even when harness files are copied elsewhere."""
+    candidates = []
+    submit_dir = os.getenv("SLURM_SUBMIT_DIR")
+    if submit_dir:
+        candidates.append(Path(submit_dir).resolve())
+    candidates.append(Path(__file__).resolve())
+    src_dir: Optional[Path] = None
+    for candidate in candidates:
+        for base in [candidate] + list(candidate.parents):
+            maybe_src = base if base.name == "src" else base / "src"
+            if maybe_src.is_dir():
+                src_dir = maybe_src
+                break
+        if src_dir:
+            break
+    if src_dir:
+        src_str = str(src_dir)
+        if src_str not in sys.path:
+            sys.path.insert(0, src_str)
+    return src_dir
+
+
+_bootstrap_src_path()
+
+from helper.repo_paths import ensure_modeling_on_sys_path  # noqa: E402
+
+ensure_modeling_on_sys_path()
+
+try:
     from sae import load_sae as _load_project_sae  # noqa: E402
 except Exception:  # pragma: no cover - optional dependency
     _load_project_sae = None
@@ -309,7 +328,7 @@ class SteeredHF(HFLM):
         if action == "sparse_add":
             if _load_project_sae is None:
                 raise ImportError(
-                    "Sparse steering requires modeling/BiPO/sae.py to be available."
+                    "Sparse steering requires modeling/yapo/sae.py to be available."
                 )
             layer_idx = steering_meta.get("layer")
             if layer_idx is None:
