@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Path to test Slurm script (relative to repo)
-BASE_SLURM_SCRIPT="${SCRIPT_DIR}/test_steering.slurm"
+BASE_SLURM_SCRIPT="${SCRIPT_DIR}/test_steering.sh"
 
 # --- Customize the sweep here (comment out items to reduce fan-out) ---
 MODEL_SIZE="2b"
