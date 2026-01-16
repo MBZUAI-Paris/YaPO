@@ -69,6 +69,8 @@ if is_wandb_available():
 if is_deepspeed_available():
     import deepspeed
 
+_TRAINER_LOG_ACCEPTS_START_TIME = "start_time" in inspect.signature(Trainer.log).parameters
+
 
 class BiPOTrainer(Trainer):
     r"""
@@ -1797,7 +1799,10 @@ class BiPOTrainer(Trainer):
         except Exception:
             # If the model doesn't have a steering vector, skip logging
             pass
-        return super().log(logs, start_time=start_time)
+        log_fn = super().log
+        if start_time is not None and _TRAINER_LOG_ACCEPTS_START_TIME:
+            return log_fn(logs, start_time=start_time)
+        return log_fn(logs)
 
     @wraps(Trainer.push_to_hub)
     def push_to_hub(self, commit_message: Optional[str] = "End of training", blocking: bool = True, **kwargs) -> str:
