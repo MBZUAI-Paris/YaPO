@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=yapo-sparse
+#SBATCH --job-name=yapo
 #SBATCH --partition=hermes-1,hermes-2
 #SBATCH --nodes=1                # Number of nodes
 #SBATCH --ntasks-per-node=1      # One task per node
@@ -50,8 +50,8 @@ export TOKENIZERS_PARALLELISM=${TOKENIZERS_PARALLELISM:-false}
 # MI210 exposes gfx90a; forcing this avoids falling back to consumer HIP stacks.
 export HSA_OVERRIDE_GFX_VERSION=9.0.10
 export HIP_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-LIBS_DIR="${LIBS_DIR:-${HOME}/libs}"
-export LD_PRELOAD="${LIBS_DIR}/libamdhip64.so:${LD_PRELOAD:-}"
+# LIBS_DIR="${LIBS_DIR:-${HOME}/verl_libs}"
+# export LD_PRELOAD="${LIBS_DIR}/libamdhip64.so:${LD_PRELOAD:-}"
 # -----------------------------------------
 
 
@@ -60,7 +60,7 @@ set -euo pipefail
 cd "${TRAIN_DIR}"
 
 # Defaults (can be overridden via flags below)
-MODE="dense"                      # one of: dense|sparse
+MODE="sparse"                      # one of: dense|sparse
 LOCALIZATION_STATUS="localized"   # one of: localized|nolocalized|both
 MCQ_TRAINING=1
 COUNTRY_NAME="morocco"
@@ -225,7 +225,7 @@ if command -v conda >/dev/null 2>&1; then
   eval "$(conda shell.bash hook)"
   conda deactivate || true
   echo "[INFO] Activating conda environment 'yapo'"
-  conda activate bipo
+  conda activate yapo
   set -u
 else
   echo "[WARN] 'conda' not found on PATH; assuming environment is already set"
