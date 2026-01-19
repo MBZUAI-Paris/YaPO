@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YaPO — Project Page</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="icon" type="image/webp" href="assets/logo.webp" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&display=swap');
+
+    :root {
+      --bg: #f7f4ee;
+      --ink: #121722;
+      --muted: #5a6474;
+      --card: #ffffff;
+      --border: rgba(15, 23, 42, 0.12);
+      --accent: #d96b3a;
+      --accent-2: #1f6a64;
+      --accent-3: #efc468;
+      --font-serif: "Fraunces", "Times New Roman", serif;
+      --font-sans: "IBM Plex Sans", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: linear-gradient(180deg, #f7f4ee 0%, #f3efe6 45%, #f8f4ec 100%);
+    }
+
+    .page {
+      width: min(1200px, 92vw);
+      margin: 40px auto 80px auto;
+      display: grid;
+      gap: 28px;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.96));
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      box-shadow: 0 28px 60px rgba(15, 23, 42, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(150deg, rgba(239, 196, 104, 0.22), rgba(31, 106, 100, 0.10), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 14px;
+    }
+
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .pill {
+      background: rgba(217, 107, 58, 0.15);
+      color: #b04f27;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3vw, 42px);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 820px;
+    }
+
+    .authors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-weight: 600;
+    }
+
+    .affil {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .link-btn {
+      text-decoration: none;
+      color: var(--ink);
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .section {
+      background: var(--card);
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      padding: 22px 24px;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+    }
+
+    .section.flat {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .section h2 {
+      margin: 0 0 10px 0;
+      font-family: var(--font-serif);
+      font-size: 22px;
+    }
+
+    .section p {
+      margin: 0 0 10px 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .two-col p {
+      text-wrap: pretty;
+    }
+
+    .two-col {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
+    }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      color: var(--muted);
+    }
+
+    .embed-block { margin-top: 12px; }
+
+    .names-embed {
+      --bg: #f9f9f7;
+      --ink: #000000;
+      --muted: #b6b09f;
+      --card: #ffffff;
+      --border: #b6b09f;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: transparent;
+      padding: 0;
+    }
+
+    .names-embed * { box-sizing: border-box; }
+    .names-embed .card {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+      position: relative;
+      overflow: hidden;
+      padding: 20px 24px 16px 24px;
+    }
+
+    .names-embed .heading {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 8px 14px 8px;
+    }
+
+    .names-embed .title {
+      font-family: "IBM Plex Serif", "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #0b1220;
+      margin-bottom: 2px;
+    }
+
+    .names-embed .caption {
+      color: #000000;
+      margin: 0 0 2px 0;
+    }
+
+    .names-embed .legend {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px 10px;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 12px;
+      color: #000000;
+      user-select: none;
+      padding: 6px 2px 10px 2px;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+      overflow-x: auto;
+      max-width: 100%;
+      scrollbar-width: thin;
+    }
+
+    .names-embed .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    }
+
+    .names-embed .legend-logo {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .names-embed .legend-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .names-embed .swatch { width: 18px; height: 10px; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.12); }
+    .names-embed .legend-label { font-weight: 600; color: #000000; }
+
+    .names-embed .chart-wrap {
+      position: absolute;
+      inset: 140px 16px 18px 16px;
+    }
+
+    .names-embed .footnote {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: 26px; font-size: 12px; color: var(--muted);
+    }
+
+    .scale-embed {
+      --bg: #ffffff;
+      --ink: #0b1220;
+      --muted: #5b6472;
+      --card: #fbfbf9;
+      --border: rgba(15, 23, 42, 0.12);
+      --accent: #de7a4a;
+      --accent-2: #1b6f6a;
+      --accent-3: #efc468;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: transparent;
+      padding: 0;
+    }
+
+    .scale-embed * { box-sizing: border-box; }
+    .scale-embed .card {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.92));
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+      padding: 18px 22px 16px 22px;
+      backdrop-filter: blur(8px);
+    }
+
+    .scale-embed .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(140deg, rgba(239, 196, 104, 0.25), rgba(27, 111, 106, 0.12), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .scale-embed .heading {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 6px 4px 10px 4px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .scale-embed .meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: var(--muted);
+    }
+
+    .scale-embed .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(222, 122, 74, 0.12);
+      color: #b6562e;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+
+    .scale-embed .title {
+      font-family: "Fraunces", "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .scale-embed .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .scale-embed .legend {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 10px 14px;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--ink);
+      user-select: none;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .scale-embed .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    .scale-embed .legend-logo {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+
+    .scale-embed .legend-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .scale-embed .swatch { width: 18px; height: 10px; border-radius: 3px; box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.12); }
+    .scale-embed .legend-label { font-weight: 600; }
+
+    .scale-embed .chart-wrap {
+      position: absolute;
+      inset: 140px 16px 18px 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .scale-embed .footnote {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: 20px; font-size: 12px; color: var(--muted);
+      z-index: 2;
+    }
+
+    .caption {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .gallery {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .gallery-item {
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 10px;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+    }
+
+
+    .gallery-label {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .method-figure {
+      margin: 8px auto 0 auto;
+      text-align: center;
+    }
+
+    .method-figure img {
+      width: min(900px, 100%);
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .method-figure figcaption {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: center;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .hero { padding: 22px; }
+      .names-embed .card { aspect-ratio: 4 / 3; }
+      .scale-embed .card { aspect-ratio: 4 / 3; }
+    }
+
+    @media (max-width: 720px) {
+      .page { margin: 24px auto 56px auto; }
+      .hero { padding: 18px; border-radius: 20px; }
+      h1 { font-size: clamp(24px, 6vw, 32px); }
+      .subtitle { font-size: 14px; }
+      .two-col { grid-template-columns: 1fr; }
+      .section { padding: 18px; border-radius: 18px; }
+      .section h2 { font-size: 20px; }
+      .names-embed .card { aspect-ratio: auto; min-height: 360px; }
+      .names-embed .legend { flex-wrap: wrap; justify-content: flex-start; }
+      .names-embed .chart-wrap {
+        position: relative;
+        inset: auto;
+        height: 320px;
+        margin-top: 8px;
+      }
+      .gallery { grid-template-columns: 1fr; }
+      .method-figure img { width: 100%; }
+      .method-figure figcaption { font-size: 13px; }
+    }
+
+    @media (max-width: 480px) {
+      .page { width: min(720px, 92vw); }
+      .eyebrow { font-size: 11px; letter-spacing: 1.2px; }
+      .pill { padding: 5px 8px; }
+      .authors { gap: 6px 12px; font-size: 13px; }
+      .affil, .correspondence { font-size: 12px; }
+      .names-embed .chart-wrap { height: 300px; }
+      .names-embed .legend-item { padding: 5px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">
+          <span class="pill">Project Page</span>
+          <span>Yet another Policy Optimization (YaPO)</span>
+        </div>
+        <h1>YaPO: Learnable Sparse Activation Steering Vectors for Domain Adaptation</h1>
+        <div class="subtitle">
+          YaPO learns sparse steering vectors in SAE space with a bi-directional preference objective for stable, interpretable control.
+          It converges faster than dense baselines, improves cultural alignment, and preserves general knowledge on MMLU.
+        </div>
+      <div class="authors">
+        <span>
+          <a href="https://scholar.google.com/citations?user=MeyZL18AAAAJ&hl=en" target="_blank">
+            Abdelaziz Bounhar<sup>1,*</sup>
+          </a>
+        </span>
+        <span>
+          <a href="https://scholar.google.com/citations?user=ic1jai8AAAAJ&hl=en" target="_blank">
+            Rania Hossam Elmohamady Elbadry<sup>1</sup>
+          </a>
+        </span>
+        <span>
+          <a href="https://scholar.google.com/citations?user=yX24ZNQAAAAJ&hl=en" target="_blank">
+            Hadi Abdine<sup>1</sup>
+          </a>
+        </span>
+        <span>
+          <a href="https://scholar.google.com/citations?user=DfXsKZ4AAAAJ&hl=fr" target="_blank">
+            Preslav Nakov<sup>1</sup>
+          </a>
+        </span>
+        <span>
+          <a href="https://scholar.google.com/citations?user=aWGJYcMAAAAJ&hl=fr" target="_blank">
+            Michalis Vazirgiannis<sup>1,2</sup>
+          </a>
+        </span>
+        <span>
+          <a href="https://scholar.google.com/citations?user=EcBibPkAAAAJ&hl=en" target="_blank">
+            Guokan Shang<sup>1,*</sup>
+          </a>
+        </span>
+      </div>
+
+      <div class="affiliations">
+        <span><sup>1</sup> MBZUAI</span>
+        <span><sup>2</sup> École Polytechnique</span>
+      </div>
+
+      <div class="correspondence">
+        <sup>*</sup> Correspondence:
+        <a href="mailto:abdelaziz.bounhar@mbzuai.ac.ae">abdelaziz.bounhar@mbzuai.ac.ae</a>,
+        <a href="mailto:guokan.shang@mbzuai.ac.ae">guokan.shang@mbzuai.ac.ae</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Abstract</h2>
+      <p>
+        Activation steering offers a lightweight alternative to fine-tuning, but dense steering vectors often entangle multiple
+        behaviors, limiting stability and fine-grained control. We propose YaPO, a reference-free method that learns sparse
+        steering vectors in the latent space of a pretrained Sparse Autoencoder (SAE) using a bi-directional preference
+        optimization objective. By optimizing sparse codes and reconstructing activations with residual correction, YaPO
+        yields disentangled, interpretable, and efficient steering directions. Experiments show faster convergence and more
+        stable training than dense baselines, with stronger cultural alignment and broad generalization to hallucination,
+        jailbreak, power-seeking, and wealth-seeking behaviors. YaPO preserves general knowledge, with no measurable
+        degradation on MMLU, providing a practical recipe for efficient, stable domain adaptation of LLMs.
+      </p>
+    </section>
+
+    <section class="section flat">
+      <figure class="method-figure">
+        <img src="assets/method.png" alt="YaPO method overview diagram" />
+        <figcaption>
+          YaPO projects target-layer activations into SAE space, optimizes a sparse steering vector with a bi-directional
+          preference objective, then decodes with residual correction before injecting the steer.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section two-col">
+      <div>
+        <h2>Key Ideas</h2>
+        <p class="callout">
+          <strong>Dense steering vectors</strong> entangle multiple behaviors due to neuron multi-semanticity.
+          <strong>Sparse Autoencoders</strong> provide a disentangled basis for fine-grained, interpretable steering.
+        </p>
+        <p>
+          <strong>YaPO</strong> learns steering vectors in sparse SAE space using a <strong>bi-directional preference objective</strong>,
+          then decodes them back with <strong>residual correction</strong> for faithful activation reconstruction.
+        </p>
+      </div>
+      <div>
+        <h2>Contributions</h2>
+        <p>- <strong>First reference-free method</strong> to learn sparse steering vectors in SAE latent space from preference data.</p>
+        <p>- <strong>New cultural alignment benchmark</strong> spanning five language families and fifteen cultural contexts.</p>
+        <p>- <strong>Faster convergence</strong>, improved stability, and strong generalization across alignment behaviors without <strong>MMLU</strong> drop.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Observations</h2>
+      <p>
+        <strong>YaPO</strong> combines <strong>DPO-style preference optimization</strong> with <strong>SAE-based sparsity</strong>: it optimizes sparse codes
+        while keeping the <strong>LLM</strong> and <strong>SAE</strong> frozen, and injects the decoded steering direction at a target layer.
+        This yields <strong>stable training</strong>, <strong>fine-grained cultural adaptation</strong>, and broader alignment control without
+        degrading <strong>general knowledge</strong>.
+      </p>
+    </section>
+    
+
+    <section class="section flat">
+      <div class="embed-block names-embed">
+          <div class="card">
+          <div class="heading">
+            <div class="title">MCQ Performance Evaluation</div>
+            <div class="caption">
+              <strong>Note:</strong> Results use <strong>Gemma-2-2B-it</strong> and report average MCQ accuracy across language categories;
+              <strong>Baseline</strong> is the unsteered model.
+            </div>
+            <div class="legend" id="legend-names"></div>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="names-chart" aria-label="Benchmarks bar chart" role="img"></canvas>
+          </div>
+
+          <div class="footnote" id="names-lcb-window" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Training Dynamics</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="assets/paper_results/training_dynamics/egypt_mcq_noloc_comparison.png" alt="Training dynamics: Egypt MCQ non-localized loss" />
+          <div class="gallery-label">Egypt (non-localized)</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/paper_results/training_dynamics/nepal_mcq_noloc_comparison.png" alt="Training dynamics: Nepal MCQ non-localized loss" />
+          <div class="gallery-label">Nepal (non-localized)</div>
+        </div>
+      </div>
+      <br>
+      <p>
+        <strong>Convergence:</strong> Across Egypt and Nepal, YaPO’s loss drops below 0.1 within ~150 steps, while BiPO
+        remains above 0.3 even after 600 steps. We observe this consistently on other countries, and attribute this gap to optimizing in sparse SAE space,
+        which yields cleaner gradients and more stable optimization than dense residual-space steering.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Steering Multiplier Effect</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="assets/paper_results/steering_multiplier/multipliers_egy_lev.png" alt="Accuracy vs. steering multiplier for Egypt and Levantine" />
+          <div class="gallery-label">Egypt &amp; Levantine</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/paper_results/steering_multiplier/multipliers_nep_spa.png" alt="Accuracy vs. steering multiplier for Nepal and Spain" />
+          <div class="gallery-label">Nepal &amp; Spain</div>
+        </div>
+      </div>
+      <br>
+      <p>
+        <strong>Steering multiplier λ sensitivity:</strong> The multiplier curves show how accuracy changes as the steering strength varies, with
+        YaPO exhibiting a clearer gain under positive multipliers in these case studies compared to other methods.
+      </p>
+    </section>
+
+    <div class="footer">YaPO project page · MBZUAI-IFM Paris.</div>
+    <br>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script>
+    (() => {
+      const canvas = document.getElementById('names-chart');
+      if (!canvas || !window.Chart) return;
+      const ctx = canvas.getContext('2d');
+
+      function makeGrad(context, area, from, to) {
+        const g = context.createLinearGradient(0, area.top, 0, area.bottom);
+        g.addColorStop(0, from);
+        g.addColorStop(1, to);
+        return g;
+      }
+
+      const labels = ['Arabic', 'English', 'Spanish', 'Portuguese', 'Hindi', 'Average'];
+
+      const dataSetsRaw = [
+      { key: 'baseline', label: 'Baseline',    shortLabel: 'Baseline', isOurs: false, logo: null, logoPos: 'center', data: [19.3, 35.7, 24.8, 24.1, 31.0, 26.98], from: '#ECECEC', to: '#ECECEC' },
+      { key: 'yapo',     label: 'YaPO (ours)', shortLabel: 'YaPO',     isOurs: true,  logo: null, logoPos: 'center', data: [25.0, 50.4, 39.3, 41.7, 56.8, 42.64], from: '#000000', to: '#000000' },
+      // { key: 'yapo',     label: 'YaPO (ours)', shortLabel: 'YaPO',     isOurs: false, logo: null, logoPos: 'center', data: [25.0, 50.4, 39.3, 41.7, 56.8, 42.64], from: '#000000', to: '#000000' },
+      { key: 'caa',      label: 'CAA',         shortLabel: 'CAA',      isOurs: false, logo: null, logoPos: 'center', data: [20.0, 46.1, 38.2, 41.0, 50.2, 39.10], from: '#c1d9ff', to: '#8A244B' },
+      { key: 'sas',      label: 'SAS',         shortLabel: 'SAS',      isOurs: false, logo: null, logoPos: 'center', data: [22.7, 46.2, 38.6, 39.4, 41.6, 37.70], from: '#f1f5f9', to: '#CDC1FF' },
+      { key: 'bipo',     label: 'BiPO',        shortLabel: 'BiPO',     isOurs: false, logo: null, logoPos: 'center', data: [22.5, 39.0, 29.2, 28.9, 32.3, 30.38], from: '#86efac', to: '#f0fdf4' },
+    ];
+
+      const logoCache = {};
+      function getLogo(src, chart) {
+        if (!src) return null;
+        if (logoCache[src]) return logoCache[src];
+        const img = new Image();
+        img.onload = () => chart.update();
+        img.src = src;
+        logoCache[src] = img;
+        return img;
+      }
+
+      const drawValues = {
+        id: 'drawValuesNames',
+        afterDatasetsDraw(chart) {
+          const { ctx } = chart;
+          if (chart.width < 700) return;
+          ctx.save();
+          ctx.font = '600 12px "Times New Roman", Times, serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+
+          chart.data.datasets.forEach((dataset, datasetIndex) => {
+            const meta = chart.getDatasetMeta(datasetIndex);
+            meta.data.forEach((bar, i) => {
+              const value = dataset.data[i];
+              const text = typeof value === 'number' ? value.toFixed(1) : value;
+              ctx.fillStyle = dataset.valueColor || '#111827';
+              ctx.fillText(text, bar.x, bar.y - 6);
+
+              if (dataset.isOurs && dataset.shortLabel) {
+                ctx.save();
+                ctx.font = '700 16px "Times New Roman", Times, serif';
+                const labelY = bar.base - 6;
+                ctx.translate(bar.x, labelY);
+                ctx.rotate(-Math.PI / 2);
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = 'rgba(6, 12, 20, 0.55)';
+                ctx.fillStyle = dataset.labelColor || '#f8fafc';
+                ctx.strokeText(dataset.shortLabel, 0, 0);
+                ctx.fillText(dataset.shortLabel, 0, 0);
+                ctx.restore();
+              }
+
+              if (dataset.logoSrc) {
+                const img = getLogo(dataset.logoSrc, chart);
+                if (img && img.complete) {
+                  const maxSize = Math.min(28, bar.width * 0.9);
+                  const ar = img.width / img.height;
+                  const w = ar >= 1 ? maxSize : maxSize * ar;
+                  const h = ar >= 1 ? maxSize / ar : maxSize;
+                  const y = dataset.logoPos === 'top'
+                    ? bar.y + h * 0.6
+                    : bar.y + (bar.base - bar.y) / 2;
+                  ctx.save();
+                  ctx.globalAlpha = 0.95;
+                  ctx.drawImage(img, bar.x - w / 2, y - h / 2, w, h);
+                  ctx.restore();
+                }
+              }
+            });
+          });
+
+          ctx.restore();
+        }
+      };
+
+      const legendEl = document.getElementById('legend-names');
+      if (legendEl) {
+        legendEl.textContent = '';
+        dataSetsRaw.filter((s) => !s.isOurs).forEach((s) => {
+          const item = document.createElement('span');
+          item.className = 'legend-item';
+
+          const swatch = document.createElement('span');
+          swatch.className = 'swatch';
+          swatch.style.background = `linear-gradient(180deg, ${s.from}, ${s.to})`;
+
+          const label = document.createElement('span');
+          label.className = 'legend-label';
+          label.textContent = s.label;
+
+          item.appendChild(swatch);
+          item.appendChild(label);
+          legendEl.appendChild(item);
+        });
+      }
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: dataSetsRaw.map((s) => ({
+            label: s.label,
+            data: s.data,
+            isOurs: s.isOurs,
+            shortLabel: s.shortLabel,
+            valueColor: s.isOurs ? '#0b1a2a' : '#1f2937',
+            labelColor: '#f8fafc',
+            logoSrc: s.logo,
+            logoPos: s.logoPos,
+            borderWidth: 0,
+            borderSkipped: false,
+            borderRadius: 10,
+            backgroundColor: (context) => {
+              const { chart } = context;
+              const { chartArea } = chart;
+              if (!chartArea) return s.from;
+              return makeGrad(chart.ctx, chartArea, s.from, s.to);
+            },
+            barPercentage: 0.82,
+            categoryPercentage: 0.78,
+            hoverBackgroundColor: s.from,
+          }))
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { top: 14, left: 8, right: 8, bottom: 28 } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (context) => `${context.dataset.label}: ${context.raw}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              stacked: false,
+              ticks: { font: { weight: '600' } },
+              grid: { display: false }
+            },
+            y: {
+              min: 0,
+              max: 60,
+              ticks: { stepSize: 10 },
+              grid: { color: 'rgba(0,0,0,.06)' }
+            }
+          }
+        },
+        plugins: [drawValues]
+      });
+
+      const footnote = document.getElementById('names-lcb-window');
+      if (footnote) footnote.textContent = '';
+    })();
+
+  </script>
+</body>
+</html>
