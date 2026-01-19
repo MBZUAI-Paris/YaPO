@@ -792,7 +792,7 @@
       const legendEl = document.getElementById('legend-names');
       if (legendEl) {
         legendEl.textContent = '';
-        dataSetsRaw.filter((s) => !s.isOurs).forEach((s) => {
+        dataSetsRaw.forEach((s) => {
           const item = document.createElement('span');
           item.className = 'legend-item';
 
