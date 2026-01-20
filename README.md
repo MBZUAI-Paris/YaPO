@@ -13,7 +13,7 @@
   <a href="https://mbzuai-paris.github.io/YaPO">
     <img src="https://img.shields.io/badge/Project%20Page-YaPO-green?logo=google-chrome&logoColor=white" alt="Project page"/>
   </a>
-  <a href="https://wandb.ai/ahmad-chamma-mbzuai/Alignement">
+  <a href="https://wandb.ai/ahmad-chamma-mbzuai/Alignement_amd/reports/-YaPO-Yet-Another-Policy-Optimization--VmlldzoxNTY4NTQzOA?accessToken=c6yd596431a9bc1eh25ma4ea3vubmorlz9jv1bem03xfhgxyvso422l5s077g2p1">
     <img src="https://img.shields.io/badge/W%26B-Alignement-yellow?logo=weightsandbiases&logoColor=white" alt="Weights & Biases project"/>
   </a>
 </p>
