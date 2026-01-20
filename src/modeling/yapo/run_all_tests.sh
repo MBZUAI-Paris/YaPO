@@ -9,8 +9,9 @@ BASE_SLURM_SCRIPT="${SCRIPT_DIR}/test_steering.sh"
 MODEL_SIZE="2b"
 MULTILINGUAL_EVAL=1
 MCQ_LIST=(0 1)
-COUNTRIES=(brazil mozambique portugal india nepal spain bolivia mexico usa australia u egypt morocco ksa levantine)
+COUNTRIES=(brazil mozambique portugal india nepal spain bolivia mexico usa australia egypt morocco ksa levantine)
 LOCS=(localized nolocalized both)
+PUSH_REPO_BASE="MBZUAI-Paris/Deep-Culture-Lense_eval"
 
 
 # Optional: limit total submissions (0 = no limit)
@@ -20,6 +21,16 @@ LIMIT=8 # limit the number of samples in test for debug
 # --- No changes needed below ---
 submit_count=0
 timestamp=$(date +%Y%m%d_%H%M%S)
+
+# Parse CLI flags
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --push_repo_base) PUSH_REPO_BASE="${2}"; shift 2 ;;
+    --) shift; EXTRA_ARGS=("$@"); break ;;
+    *) echo "[ERR] Unknown option: $1" >&2; exit 1 ;;
+  esac
+done
+
 
 echo "Starting submission matrix at ${timestamp}"
 echo "Base script: ${BASE_SLURM_SCRIPT}"
@@ -46,6 +57,7 @@ for mcq in "${MCQ_LIST[@]}"; do
         -e "s|^([[:space:]]*MODEL_SIZE=).*|\1${MODEL_SIZE}|" \
         -e "s|^([[:space:]]*MULTILINGUAL_EVAL=).*|\1${MULTILINGUAL_EVAL}|" \
         -e "s|^([[:space:]]*MCQ_EVAL=).*|\1${mcq}|" \
+        -e "s|^([[:space:]]*PUSH_REPO_BASE=).*|\1${PUSH_REPO_BASE}|" \
         -e "s|^([[:space:]]*COUNTRY_NAME=).*|\1\"${country}\"|" \
         -e "s|^([[:space:]]*LOCALIZATION_STATUS=).*|\1${loc}|" \
         -e "s|^([[:space:]]*LIMIT=).*|\1${LIMIT}|" \

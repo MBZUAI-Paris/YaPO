@@ -60,6 +60,7 @@ set -euo pipefail
 cd "${TRAIN_DIR}"
 
 # Defaults (can be overridden via flags below)
+DATASET="MBZUAI-Paris/Deep-Culture-Lense"
 MODE="sparse"                      # one of: dense|sparse
 LOCALIZATION_STATUS="localized"   # one of: localized|nolocalized|both
 MCQ_TRAINING=1
@@ -93,7 +94,6 @@ if [[ "${MCQ_TRAINING}" == "1" ]]; then
   CHOSEN_COLNAME="chosen-mcq"
   REJECTED_COLNAME="rejected_gemma_2_${MODEL_SIZE}_it_mcq"  # leave empty to auto-detect model-specific rejected columns
   MAXLEN=1024
-  DATASET="Alignement/Arabic_cultural_dataset_processed_${MODEL_SIZE}_mcq_mxlen_${MAXLEN}"
   # Reserve some space for MCQ answers; override via --max_prompt_length if desired
   if [[ -z "${PROMPT_MAXLEN}" ]]; then PROMPT_MAXLEN=$(( MAXLEN - 32 )); fi
 else
@@ -103,7 +103,6 @@ else
   CHOSEN_COLNAME="chosen_open_ended"
   REJECTED_COLNAME="rejected_gemma_2_${MODEL_SIZE}_it_open_ended"  # leave empty to auto-detect model-specific rejected columns
   MAXLEN=512
-  DATASET="Alignement/Arabic_cultural_dataset_processed_${MODEL_SIZE}_oe_mxlen_${MAXLEN}"
   # Reserve space for longer open-ended answers
   if [[ -z "${PROMPT_MAXLEN}" ]]; then PROMPT_MAXLEN=$(( MAXLEN - 128 )); fi
 fi

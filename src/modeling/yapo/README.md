@@ -20,6 +20,7 @@ Main entry point: `src/modeling/yapo/train.sh`
 ```
 cd ~/src/modeling/yapo
 sbatch train.sh \
+  --dataset HF_USER/HF_REPO_WITH_REJECTED_SAMPLES \
   --mode sparse \            # or --dense for BiPO
   --layer 15 \               # SAE insertion layer
   --country_name morocco \
@@ -38,6 +39,7 @@ Key notes:
   or leave them blank to use the per-layer defaults.
 * To disable Weights & Biases logging, unset `WANDB_API_KEY` or pass
   `--report_to none`.
+* Make sure that you pass the dataset with rejected samples that is generated in the data preparation phase using `--dataset` to run the training.
 
 Training logs live in `logs/modeling/train/`.
 
@@ -48,18 +50,15 @@ Training logs live in `logs/modeling/train/`.
 ```
 cd ~/yapo_clean/src/modeling/yapo
 ./run_all_tests.sh \
-  --mode sparse \                 # matches train mode
-  --layer 15 \
-  --vector_dir ./vector/my_exp \
-  --behavior my_behavior_tag
+  --push_repo_base HF_USER/HF_DATASET_NAME
 ```
 
 What it does:
 
 1. Uses `test_steering.sh` to run each steering
-   configuration (sparse or dense) and dump generations.
+   configuration (sparse or dense) and dump generations. 
 2. Writes outputs under `logs/modeling/test/*` plus `vector/<behavior>_*`.
-3. Produces the datasets (`.jsonl` / `.parquet`) that `src/eval` consumes.
+3. Produces the datasets (`.jsonl` / `.parquet`) that `src/eval` consumes. You need to pass `--push_repo_base` to push the output properly. You can change the countries/settings in `src/modeling/run_all_tests.sh`
 
 Typical workflow:
 

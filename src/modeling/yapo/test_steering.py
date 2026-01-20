@@ -488,7 +488,7 @@ if __name__ == "__main__":
     parser.add_argument("--multipliers", nargs="+", type=float, required=True)
     parser.add_argument("--epochs", nargs="+", type=int, required=True, help="List of epochs to process")
     parser.add_argument("--max_new_tokens", type=int, default=200)
-    parser.add_argument("--dataset_repo", type=str, default="Alignement/Arabic_cultural_dataset")
+    parser.add_argument("--dataset_repo", type=str, default="MBZUAI-Paris/Deep-Culture-Lense")
     parser.add_argument("--country_name", type=str, default="egypt",
                         help="Country filter (e.g., egypt, morocco).")
     parser.add_argument("--localization_status", type=str, default="both",

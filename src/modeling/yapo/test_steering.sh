@@ -40,11 +40,9 @@ MULTIPLIERS=${MULTIPLIERS:-"1.0"}
 MAX_NEW_TOKENS=2048
 LIMIT=8
 
-if [[ "$MULTILINGUAL_EVAL" == "1" ]]; then
-  DATASET_REPO=Alignement/Multilingual_Cultural_Dataset_MCQ_flattened
-else
-  DATASET_REPO=Alignement/Arabic_Cultural_Dataset_MCQ
-fi
+DATASET_REPO=MBZUAI-Paris/Deep-Culture-Lense
+PUSH_REPO_BASE="MBZUAI-Paris/Deep-Culture-Lense_eval"
+PUSH_REPO=${PUSH_REPO_BASE}_${MODEL_SIZE}_L${LAYER}_mcq_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
 
 if [[ "$MCQ_EVAL" == "1" ]]; then
   IS_MCQ_STR="mcq"
@@ -141,19 +139,12 @@ BEHAVIOR_DENSE=${BEHAVIOR_DENSE:-egypt_dense}
 BEHAVIOR_SPARSE=${BEHAVIOR_SPARSE:-egypt_sparse}
 
 # Single efficient run processing all epochs at once
-if [[ "$MULTILINGUAL_EVAL" == "1" ]]; then
-  if [[ "$MCQ_EVAL" == "1" ]]; then
-    PUSH_REPO=Alignement/Multilingual_cultural_dataset_eval_${MODEL_SIZE}_L${LAYER}_mcq_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
-  else
-    PUSH_REPO=Alignement/Multilingual_cultural_dataset_eval_${MODEL_SIZE}_L${LAYER}_oe_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
-  fi
-else
-  if [[ "$MCQ_EVAL" == "1" ]]; then
-    PUSH_REPO=Alignement/Arabic_cultural_dataset_eval_${MODEL_SIZE}_L${LAYER}_mcq_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
-  else
-    PUSH_REPO=Alignement/Arabic_cultural_dataset_eval_${MODEL_SIZE}_L${LAYER}_oe_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
-  fi
-fi
+# if [[ "$MCQ_EVAL" == "1" ]]; then
+#   PUSH_REPO=MBZUAI-Paris/Deep-Culture-Lenset_eval_${MODEL_SIZE}_L${LAYER}_mcq_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
+# else
+#   PUSH_REPO=MBZUAI-Paris/Deep-Culture-Lenset_eval_${MODEL_SIZE}_L${LAYER}_oe_amd_${COUNTRY_NAME}_loc-${LOCALIZATION_STATUS}
+# fi
+
 
 # Vector path templates (use {epoch} and {layer} as placeholders)
 # Dense vectors live in the hidden-size space (e.g., 2304 for Gemma-2 2B)

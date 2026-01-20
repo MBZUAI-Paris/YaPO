@@ -37,8 +37,8 @@ export HF_TOKEN=hf_...
 accelerate launch --config_file inference_config.yaml \
   generate_rejected.py \
   --on_policy_model_name meta-llama/Llama-3.1-8B-Instruct \
-  --data_path Alignement/Arabic_Cultural_Dataset_MCQ \
-  --save_data_path Alignement/Arabic_cultural_dataset_processed_llama_8b_mcq \
+  --data_path MBZUAI-Paris/Deep-Culture-Lense \
+  --save_data_path HF_USER/HF_REPO_WITH_REJECTED_SAMPLES \
   --prompt_colname prompt-mcq \
   --chosen_colname chosen-mcq \
   --checkpoint_freq 5
@@ -46,7 +46,7 @@ accelerate launch --config_file inference_config.yaml \
 
 This streams the prompts through the selected model, treats the generated text as
 `rejected_<model_name_safe>`, and periodically pushes private checkpoints to the
-specified Hub dataset.
+specified Hub dataset `--save_data_path` (Required).
 
 ### Running via SLURM
 
