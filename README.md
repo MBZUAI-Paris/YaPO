@@ -19,6 +19,7 @@
 </p>
 
 YaPO is a steering algorithm  instruction-tuned LLMs toward region- or domain-specific behaviors by learning **sparse activation vectors** on top of pretrained and frozen LLMs using Sparse AutoEncoders (SAEs). 
+The proposed cultural benchmark is available here: [Deep Culture Lens](https://huggingface.co/datasets/MBZUAI-Paris/Deep-Culture-Lense).
 
 ![Method diagram](assets/method.png)
 
